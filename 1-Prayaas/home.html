@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Home 🎉</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #010a13;
+    font-family: 'Fira Mono', monospace, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #c5ffcb;
+    text-align: center;
+    padding: 2rem 1rem;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Hacker code rain canvas covers everything */
+  #hacker-bg {
+    position: fixed;
+    z-index: 0;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    background: transparent;
+    opacity: 0.8;
+  }
+
+  /* Content sits above code rain */
+  .content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* Gradient cyber heading */
+  h1 {
+    font-size: 4.8rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+    background: linear-gradient(90deg, #39ff14 15%, #00ffe7 55%, #afffaf 85%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    text-shadow: 2px 2px 18px #39ff14, 0 0 12px #00ffe7;
+    margin-bottom: 2.5rem;
+    filter: brightness(1.15);
+  }
+
+  /* Memories Section for terminal/coder feel */
+  #memory-section {
+    margin-top: 1.2rem;
+    background: rgba(12,22,18,0.96);
+    border-radius: 16px;
+    padding: 1.5rem 2rem 2.2rem 2rem;
+    box-shadow: 0 0 32px rgba(57,255,20,0.09);
+  }
+  #memory-section h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom: 1.4rem;
+    color: #59ff8b;
+    font-family: 'Fira Mono', monospace, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.12em;
+    text-shadow: 0 1px 6px #43ff64;
+  }
+  .memory-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.22rem;
+  }
+  .memory-video {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(57,255,20,0.38);
+  cursor: pointer;
+  background: #020d08;
+  transition: transform 0.23s, box-shadow 0.23s;
+  margin: 0; /* if needed, matches img style */
+}
+.memory-video:hover {
+  transform: scale(1.10);
+  box-shadow: 0 10px 36px #00ffe7c9;
+  filter: brightness(1.13) saturate(1.2);
+}
+
+
+  /* Container to hold audio and video sections side by side */
+  #media-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem; /* spacing between audio and video */
+    flex-wrap: wrap; /* responsive on smaller screens */
+  }
+
+  /* Audio Section */
+  #audio-section {
+    width: 320px;
+    height: 320px;
+    background: url('images/audio.jpg') no-repeat center center;
+    background-size: cover;
+    border-radius: 24px;
+    box-shadow:
+      0 10px 30px rgba(29,185,84,0.4),
+      inset 0 0 60px rgba(29,185,84,0.7);
+    padding: 1.5rem;
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Circular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  #audio-section h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 8px #1db954;
+    font-family: 'Fira Mono', monospace, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  #audio-section h2 img {
+    width: 32px;
+    height: 32px;
+    filter: brightness(0) invert(1);
+  }
+  #audio-section audio {
+    width: 90%;
+    border-radius: 16px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    filter: drop-shadow(0 0 10px #39ff14);
+    position: relative;
+    z-index: 1;
+    background-color: #121212;
+  }
+
+  /* Video section style similar to audio section */
+  #video-section {
+    width: 320px;
+    height: 320px;
+    background: url('images/video.jpg') no-repeat center center;
+    background-size: cover;
+    border-radius: 24px;
+    box-shadow:
+      0 10px 30px rgba(29,185,84,0.4),
+      inset 0 0 60px rgba(29,185,84,0.7);
+    padding: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-family: 'Circular', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  #video-section h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 8px #39ff14;
+    font-family: 'Fira Mono', monospace, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  #video-section video {
+    width: 90%;
+    max-height: 70%;
+    border-radius: 16px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    filter: drop-shadow(0 0 10px #39ff14);
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 700px) {
+    #media-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  /* Text Section Styling */
+#text-section {
+  margin-top: 2rem;
+  background: rgba(12, 22, 18, 0.96);
+  border-radius: 14px;
+  padding: 1.8rem 2rem;
+  box-shadow: 0 0 24px rgba(57, 255, 20, 0.15);
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#text-section h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  letter-spacing: 0.08em;
+  color: #59ff8b;
+  text-shadow: 0 0 8px #39ff14;
+  font-family: 'Fira Mono', monospace, 'Segoe UI', Tahoma, sans-serif;
+}
+
+#text-section p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #e6ffe6;
+  font-family: 'Fira Mono', monospace, 'Segoe UI', Tahoma, sans-serif;
+  text-shadow: 0 0 6px #39ff14;
+}
+/* Hidden by default */
+#text-section {
+  display: none;
+  margin-top: 2rem;
+  background: rgba(12, 22, 18, 0.96);
+  border-radius: 14px;
+  padding: 1.8rem 2rem;
+  box-shadow: 0 0 24px rgba(57, 255, 20, 0.15);
+  text-align: center;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#text-section h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  letter-spacing: 0.08em;
+  color: #59ff8b;
+  text-shadow: 0 0 8px #39ff14;
+  font-family: 'Fira Mono', monospace, 'Segoe UI', Tahoma, sans-serif;
+}
+
+#text-section p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #e6ffe6;
+  font-family: 'Fira Mono', monospace, 'Segoe UI', Tahoma, sans-serif;
+  text-shadow: 0 0 6px #39ff14;
+}
+
+/* Button styling */
+#toggle-message-btn {
+  background-color: transparent;
+  color: #39ff14;
+  border: 2px solid #39ff14;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  font-family: 'Fira Mono', monospace;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+#toggle-message-btn:hover {
+  background-color: #39ff14;
+  color: #000;
+  box-shadow: 0 0 12px #39ff14;
+}
+
+#video-popup-overlay {
+  position: fixed; top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.85);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10000;
+}
+#video-popup-content {
+  position: relative;
+  background: #080e0b;
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 0 48px #39ff14;
+  max-width: 96vw; max-height: 96vh;
+  display: flex; flex-direction: column; align-items: center;
+}
+#popup-video {
+  width: 80vw; max-width: 700px;
+  height: 45vw; max-height: 60vh;
+  border-radius: 8px;
+  background: #111;
+}
+#video-popup-close {
+  position: absolute; top: 8px; right: 16px;
+  color: #39ff14;
+  font-size: 2.6rem;
+  font-weight: bold;
+  cursor: pointer;
+  filter: drop-shadow(0 0 8px #00ffe7);
+  z-index: 2;
+}
+.memory-thumb {
+  display: inline-block;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.23s, box-shadow 0.23s;
+  box-shadow: 0 4px 14px rgba(57,255,20,0.38);
+}
+.memory-thumb:hover {
+  transform: scale(1.10);
+  box-shadow: 0 10px 36px #00ffe7c9;
+  filter: brightness(1.13) saturate(1.2);
+}
+.memory-thumb img {
+  width: 180px; height: 180px; object-fit: cover; display: block;
+}
+
+</style>
+</head>
+<body>
+
+<canvas id="hacker-bg"></canvas>
+
+<div class="content">
+  <h1>Happy 22<sup>nd</sup> Birthday Ma'am 🎉🎉</h1>
+
+  <section id="memory-section" aria-label="Coding Memories Gallery">
+    <h2>&lt;/&gt; Memories</h2>
+    <div class="memory-gallery">
+  <div class="memory-thumb" data-video="videos/M1.mp4">
+    <img src="images/M1.png" alt="Memory 1" />
+  </div>
+  <div class="memory-thumb" data-video="videos/M2.mp4">
+    <img src="images/M2.png" alt="Memory 2" />
+  </div>
+  <!-- Repeat for all memory videos -->
+</div>
+
+  </section>
+
+  <div id="media-container">
+
+    <section id="audio-section" aria-label="Birthday Audio">
+      <h2>
+        🎵 🫶🫶🫶
+      </h2>
+      <audio controls>
+        <source src="audios/audio.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+    </section>
+
+    <section id="video-section" aria-label="Birthday Video">
+      <h2>🎬 🫶🫶🫶</h2>
+      <video controls>
+        <source src="videos/video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </section>
+
+  </div>
+  <!-- Toggle Button -->
+<div style="margin-top: 2rem; text-align:center;">
+  <button id="toggle-message-btn">Koi jaroorat nhi h ispr click krne ki</button>
+</div>
+  <!-- Text Section -->
+<section id="text-section">
+  <h2>💬 Vahiyaat Vichaar</h2>
+  <p>
+    Bs 1 chhota sa prayaas 💛💛
+  </p>
+  <p><b><h2>~~ By &#128169&#x1F4A9</h2></b></p>
+</section>
+
+</div>
+
+<script>
+const canvas = document.getElementById('hacker-bg');
+const ctx = canvas.getContext('2d');
+let width = window.innerWidth;
+let height = window.innerHeight;
+
+function resize() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  canvas.width = width;
+  canvas.height = height;
+}
+resize();
+window.addEventListener('resize', resize);
+
+const columns = Math.floor(width / 12);
+const drops = Array.from({length: columns}, () => Math.random() * height);
+const codeCharset = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&()@*'.split('');
+
+function draw() {
+  ctx.fillStyle = 'rgba(1,10,19,0.08)';
+  ctx.fillRect(0, 0, width, height);
+
+  ctx.font = '16px Fira Mono, monospace';
+  ctx.textAlign = 'center';
+
+  for (let i = 0; i < columns; i++) {
+    const char = codeCharset[Math.floor(Math.random() * codeCharset.length)];
+    ctx.fillStyle = i % 10 ? "#39ff14" : "#00ffe7";
+    ctx.shadowColor = ctx.fillStyle;
+    ctx.shadowBlur = 8;
+    ctx.fillText(char, i * 12 + 10, height - drops[i] * 16);
+    if (Math.random() > 0.975) {
+      drops[i] = height / 16;
+    }
+    drops[i] -= 0.5; // slower upward fall
+  }
+  ctx.shadowBlur = 0;
+  requestAnimationFrame(draw);
+}
+draw();
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  // Opening the popup on gallery thumbnail click
+  document.querySelectorAll('.memory-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const videoSrc = thumb.getAttribute('data-video');
+      const overlay = document.getElementById('video-popup-overlay');
+      const videoElem = document.getElementById('popup-video');
+      videoElem.src = videoSrc;
+      videoElem.currentTime = 0;
+      videoElem.play();
+      overlay.style.display = 'flex';
+    });
+  });
+
+  // Close when clicking the '×'
+  document.getElementById('video-popup-close').addEventListener('click', () => {
+    closeVideoPopup();
+  });
+
+  // Close when clicking outside the video content
+  document.getElementById('video-popup-overlay').addEventListener('click', (e) => {
+    if (e.target.id === "video-popup-overlay") {
+      closeVideoPopup();
+    }
+  });
+
+  function closeVideoPopup() {
+    const overlay = document.getElementById('video-popup-overlay');
+    const videoElem = document.getElementById('popup-video');
+    videoElem.pause();
+    videoElem.removeAttribute('src');
+    overlay.style.display = 'none';
+  }
+
+});
+
+
+// Toggle special message
+const toggleBtn = document.getElementById('toggle-message-btn');
+const textSection = document.getElementById('text-section');
+
+toggleBtn.addEventListener('click', () => {
+  if (textSection.style.display === 'none' || textSection.style.display === '') {
+    textSection.style.display = 'block';
+    toggleBtn.textContent = 'Band ❌';
+  } else {
+    textSection.style.display = 'none';
+    toggleBtn.textContent = 'Vaise toh m suggest nhi karungi but fir bhi mann kare toh iss pr click krke nichhe scroll kr k dekh kr jitna jldi ho ske bnd kr dena💬';
+  }
+});
+
+</script>
+<!-- Popup overlay -->
+<div id="video-popup-overlay" style="display:none;">
+  <div id="video-popup-content">
+    <span id="video-popup-close">&times;</span>
+    <video id="popup-video" controls autoplay></video>
+  </div>
+</div>
+
+
+</body>
+</html>
